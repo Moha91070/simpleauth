@@ -71,18 +71,6 @@ router.post('/login', async function (req, res) {
     //3- if success redirect to home page 
 
 });
-
-router.get("/allusers", async (req, res) => {
-    try {
-        const users = await User.find()
-        res.status(200).render("profile");
-    } catch (e) {
-        res.status(500).json(e);
-    }
-});
-
-
-
 const authenticate = () => {
     const ac = new AccessControl();
     exports.roles = (function () {
@@ -93,6 +81,19 @@ const authenticate = () => {
     })
 
 }
+
+router.get("/allusers",authenticate,  async (req, res) => {
+    try {
+        const users = await User.find()
+        res.status(200).render("profile");
+    } catch (e) {
+        res.status(500).json(e);
+    }
+});
+
+
+
+
 
 export default router;
 
