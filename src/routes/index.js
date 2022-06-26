@@ -4,8 +4,6 @@ const User = require('../models/User')
 import CryptoJS from "crypto-js";
 const AccessControl = require('accesscontrol');
 
-
-
 const router = Router();
 
 router.get("/", function (req, res) {
@@ -71,24 +69,9 @@ router.post('/login', async function (req, res) {
     //3- if success redirect to home page 
 
 });
-const authenticate = () => {
-    const ac = new AccessControl();
-    exports.roles = (function () {
-        ac.grant("User").readOwn("profile").updateOwn("profile")
-        ac.grant("Admin").extend("user").readAny("profile") .updateAny("profile") .deleteAny("profile")
-        console.log(ac)
-            return ac;
-    })
 
-}
-
-router.get("/allusers",authenticate,  async (req, res) => {
-    try {
-        const users = await User.find()
-        res.status(200).render("profile");
-    } catch (e) {
-        res.status(500).json(e);
-    }
+router.get("/allusers", function (req, res) {
+    res.render('usersResult');
 });
 
 
